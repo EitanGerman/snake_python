@@ -153,15 +153,15 @@ while True:
         if event.type == SCREEN_UPDATE and main_game.game:
             main_game.update()
         if event.type == pygame.KEYDOWN:  # when a key is pressed
-            if event.key == pygame.K_UP and main_game.snake.direction != Vector2(0, 1):
+            if event.key == pygame.K_UP or event.key == pygame.K_w and main_game.snake.direction != Vector2(0, 1):
                 main_game.snake.direction = Vector2(0, -1)
-            if event.key == pygame.K_DOWN and main_game.snake.direction != Vector2(0, -1):
+            if event.key == pygame.K_DOWN or event.key == pygame.K_s and main_game.snake.direction != Vector2(0, -1):
                 main_game.snake.direction = Vector2(0, 1)
-            if event.key == pygame.K_LEFT and main_game.snake.direction != Vector2(1, 0):
+            if event.key == pygame.K_LEFT or event.key == pygame.K_a and main_game.snake.direction != Vector2(1, 0):
                 main_game.snake.direction = Vector2(-1, 0)
-            if event.key == pygame.K_RIGHT and main_game.snake.direction != Vector2(-1, 0):
+            if event.key == pygame.K_RIGHT or event.key == pygame.K_d and main_game.snake.direction != Vector2(-1, 0):
                 main_game.snake.direction = Vector2(1, 0)
-            if (not main_game.game) and event.key == pygame.K_SPACE:
+            if not main_game.game and event.key == pygame.K_SPACE:
                 main_game = MAIN()
 
     # draw board and elements
