@@ -64,6 +64,8 @@ class MAIN:
         self.fruit.draw_fruit()
         self.snake.draw_snake()
         self.display_score()
+        if not self.game:
+            self.game_over()
 
     # draw the grid on which the game is played on
     def draw_scene(self):
@@ -158,7 +160,5 @@ while True:
     # draw board and elements
     main_game.draw_scene()
     main_game.draw_elements()
-    if not main_game.game:
-        main_game.display_game_over()
     pygame.display.update()  # update the scene
     clock.tick(60)  # set frame rate
