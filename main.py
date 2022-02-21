@@ -61,6 +61,7 @@ class MAIN:
 
     # single call to draw all game elements
     def draw_elements(self):
+        self.draw_scene()
         self.fruit.draw_fruit()
         self.snake.draw_snake()
         self.display_score()
@@ -77,7 +78,7 @@ class MAIN:
                 alt = 1
             for j in range(alt, cell_num, 2):
                 grid = pygame.Rect(i * cell_size, j * cell_size, cell_size, cell_size)
-                pygame.draw.rect(screen, (150, 200, 100), grid)
+                pygame.draw.rect(screen, (130, 200, 70), grid)
 
     # check for collision with the fruit
     def check_collision(self):
@@ -105,14 +106,14 @@ class MAIN:
     def game_over(self):
         self.game = False
         self.display_message(72, 'Game Over', cell_size * cell_num // 2, (cell_size * cell_num // 2) - 23)
-        self.display_message(32, 'press space to restart the game', cell_size * cell_num // 2, (cell_size * cell_num // 2) + 30)
+        self.display_message(32, 'press space to restart the game',
+                             cell_size * cell_num // 2, (cell_size * cell_num // 2) + 30)
 
     # used to display a single message with a given size and location
     def display_message(self, size, msg, x, y):
         font = pygame.font.Font('freesansbold.ttf', size)
         text = font.render(msg, True, "Black", )
-        text_rect = text.get_rect()
-        text_rect.center = (x, y)
+        text_rect = text.get_rect(center=(x, y))
         screen.blit(text, text_rect)
 
 
@@ -158,7 +159,6 @@ while True:
                 main_game = MAIN()
 
     # draw board and elements
-    main_game.draw_scene()
     main_game.draw_elements()
     pygame.display.update()  # update the scene
     clock.tick(60)  # set frame rate
