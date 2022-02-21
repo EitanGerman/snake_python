@@ -4,4 +4,4 @@ This is a simple game of snake i have made to practice python
 <br />the game starts the moment the window is opened and is ready to play
 <br />to set the direction of the snake please use the arrow keys on your keyboard or WASD
 <br />in case you lose you can press space to restart the game
-![image](https://github.com/EitanGerman/snake_python/blob/master/graphic/Screenshot_208.png?raw=true)
+<br />![image](https://github.com/EitanGerman/snake_python/blob/master/graphic/demo.gif?raw=true)
