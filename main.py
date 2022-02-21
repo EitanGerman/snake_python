@@ -1,12 +1,7 @@
-from tkinter.tix import PopupMenu
-
 from PIL import Image
 import pygame
 import sys
 import random
-
-from django.conf.locale import tk
-from pygame import USEREVENT
 from pygame.math import Vector2
 
 
