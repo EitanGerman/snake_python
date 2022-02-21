@@ -40,7 +40,6 @@ class FRUIT:
     def draw_fruit(self):
         fruit_rect = pygame.Rect(self.pos.x * cell_size, self.pos.y * cell_size, cell_size, cell_size)
         screen.blit(apple, fruit_rect)  # place apple on the screen
-        # pygame.draw.rect(screen, "RED", fruit_rect)
 
     def randomize(self):
         self.pos = Vector2(random.randint(0, cell_num - 1), random.randint(0, cell_num - 1))
@@ -60,11 +59,13 @@ class MAIN:
         self.check_fail()
         self.display_score()
 
+    # single call to draw all game elements
     def draw_elements(self):
         self.fruit.draw_fruit()
         self.snake.draw_snake()
         self.display_score()
 
+    # draw the grid on which the game is played on
     def draw_scene(self):
         screen.fill((170, 220, 70))
         for i in range(0, cell_num):  # draw grid
@@ -76,32 +77,35 @@ class MAIN:
                 grid = pygame.Rect(i * cell_size, j * cell_size, cell_size, cell_size)
                 pygame.draw.rect(screen, (150, 200, 100), grid)
 
+    # check for collision with the fruit
     def check_collision(self):
         if self.fruit.pos == self.snake.body[0]:
-            self.snake.add_block()
+            self.snake.add_block()  # increase snake length
             self.fruit.randomize()  # generate new fruit
-            self.score += 1
+            self.score += 1         # update score
 
+    # used to check if the snake head hit a wall or the body
     def check_fail(self):
+        # check wall
         if self.snake.body[0].y < 0 or self.snake.body[0].x < 0 or \
          self.snake.body[0].y >= cell_num or self.snake.body[0].x >= cell_num:
             self.game_over()
-
+        # check body
         for block in self.snake.body[1:]:
             if block == self.snake.body[0]:
                 self.game_over()
 
+    # displays the score for the game
     def display_score(self):
         self.display_message(28, "score: " + str(main_game.score), cell_size * cell_num // 2, 20)
 
+    # set game mode to False and print message to the screen
     def game_over(self):
         self.game = False
-        self.display_game_over()
-
-    def display_game_over(self):
         self.display_message(72, 'Game Over', cell_size * cell_num // 2, (cell_size * cell_num // 2) - 23)
         self.display_message(32, 'press space to restart the game', cell_size * cell_num // 2, (cell_size * cell_num // 2) + 30)
 
+    # used to display a single message with a given size and location
     def display_message(self, size, msg, x, y):
         font = pygame.font.Font('freesansbold.ttf', size)
         text = font.render(msg, True, "Black", )
@@ -112,26 +116,27 @@ class MAIN:
 
 # start the game
 pygame.init()
-
 cell_size = 40  # default size of cells in the game
 cell_num = 20   # default number of cells in the game
 screen = pygame.display.set_mode((cell_size * cell_num, cell_size * cell_num))
 clock = pygame.time.Clock()
-# used to resize an image to the desired size of a cell
+
+# used to resize any image to the desired size of a cell
 test = Image.open("graphic/apple.png")
 test = test.resize((cell_size, cell_size), Image.ANTIALIAS)
 test.save("graphic/apple2.png")
 # loads new apple after resizing
 apple = pygame.image.load("graphic/apple2.png").convert_alpha()
-
+snake_icon = pygame.image.load("graphic/snake_icon.png").convert_alpha()
 pygame.display.set_caption("My Snake Game")  # rename window
-pygame.display.set_icon(apple)  # set icon for the game
+pygame.display.set_icon(snake_icon)  # set icon for the game
+
 SCREEN_UPDATE = pygame.USEREVENT
 pygame.time.set_timer(SCREEN_UPDATE, 150)  # move snake every 150ms
 
 main_game = MAIN()
 while True:
-    # draw all our elements
+    # handle user events
     for event in pygame.event.get():  # get event from the user
         if event.type == pygame.QUIT:  # if the user decided to close the window
             pygame.quit()
@@ -150,6 +155,7 @@ while True:
             if (not main_game.game) and event.key == pygame.K_SPACE:
                 main_game = MAIN()
 
+    # draw board and elements
     main_game.draw_scene()
     main_game.draw_elements()
     if not main_game.game:
