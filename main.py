@@ -100,21 +100,27 @@ class MAIN:
 
     # displays the score for the game
     def display_score(self):
-        self.display_message(28, "score: " + str(main_game.score), cell_size * cell_num // 2, 20)
+        self.display_message(28, "score: " + str(main_game.score), cell_size * cell_num // 2, 20, True)
 
     # set game mode to False and print message to the screen
     def game_over(self):
         self.game = False
-        self.display_message(72, 'Game Over', cell_size * cell_num // 2, (cell_size * cell_num // 2) - 23)
+        self.display_message(72, 'Game Over', cell_size * cell_num // 2, (cell_size * cell_num // 2) - 23, False)
         self.display_message(32, 'press space to restart the game',
-                             cell_size * cell_num // 2, (cell_size * cell_num // 2) + 30)
+                             cell_size * cell_num // 2, (cell_size * cell_num // 2) + 30, False)
 
     # used to display a single message with a given size and location
-    def display_message(self, size, msg, x, y):
+    def display_message(self, size, msg, x, y, bg):
         font = pygame.font.Font('freesansbold.ttf', size)
         text = font.render(msg, True, "Black", )
         text_rect = text.get_rect(center=(x, y))
+        if bg:
+            s = pygame.Surface((text_rect.width, text_rect.height))  # the size of your rect
+            s.set_alpha(128)  # alpha level
+            s.fill((70, 70, 70))  # this fills the entire surface
+            screen.blit(s, (text_rect.left, text_rect.top))  # (0,0) are the top-left coordinates
         screen.blit(text, text_rect)
+
 
 
 # start the game
